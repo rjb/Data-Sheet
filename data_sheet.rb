@@ -3,8 +3,6 @@ require 'openssl'
 require 'google/apis/sheets_v4'
 require 'googleauth'
 require 'googleauth/stores/file_token_store'
-require 'fileutils'
-require 'date'
 
 module DataSheet
   class Authentication
@@ -67,4 +65,18 @@ module DataSheet
       GoogleService.new(authorization_details)
     end
   end
+end
+
+# GoogleSheet::Service.oauth()
+
+service = DataSheet::GoogleService.oauth(
+  'secret_credentials.json',
+  application_name: 'SeaDrive Sync Status'
+)
+sheet = service.spreadsheet_values(
+  '1nGFx5bwqj9mj0LuakXssmySuIwPj9v4WCkxHBvJRwkg',
+  'A2:D5'
+)
+sheet.values.each do |row|
+  p row
 end
