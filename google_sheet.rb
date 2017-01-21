@@ -61,8 +61,7 @@ module GoogleSheet
     end
 
     def sheet(id, range)
-      @google_sheets_service.get_spreadsheet_values(id, range)
-      
+      @sheet ||= @google_sheets_service.get_spreadsheet_values(id, range)
     end
 
     def authorize
