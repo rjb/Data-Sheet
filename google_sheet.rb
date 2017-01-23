@@ -36,13 +36,13 @@ module GoogleSheet
       puts url
 
       code = gets
-      token = {
+      details = {
         user_id: user_id,
         code: code,
         base_url: OOB_URI
       }
 
-      google_user_authorizer.get_and_store_credentials_from_code(token)
+      google_user_authorizer.get_and_store_credentials_from_code(details)
     end
   end
 end
