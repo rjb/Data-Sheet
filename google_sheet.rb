@@ -60,11 +60,11 @@ end
 
 module GoogleSheet
   class Spreadsheet
-    attr_reader :value
+    attr_reader :google_sheet
 
-    def initialize(service, value)
+    def initialize(service, google_sheet)
       @service = service
-      @value = value
+      @google_sheet = google_sheet
     end
 
     def cells(range)
@@ -72,7 +72,7 @@ module GoogleSheet
     end
 
     def id
-      @value.spreadsheet_id
+      @google_sheet.spreadsheet_id
     end
 
     private
