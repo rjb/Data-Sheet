@@ -60,15 +60,14 @@ end
 
 module GoogleSheet
   class Spreadsheet
-    attr_reader :google_sheet
 
     def initialize(service, google_sheet)
       @service = service
       @google_sheet = google_sheet
     end
 
-    def cells(range)
-      connection.get_spreadsheet_values(id, range).values
+    def cells
+      @google_sheet.values
     end
 
     def id
@@ -90,8 +89,8 @@ module GoogleSheet
       @connection = Connection.new(credentials)
     end
 
-    def spreadsheet(id)
-      @spreadsheet ||= Spreadsheet.new(self, connection.get_spreadsheet(id))
+    def spreadsheet(id, range)
+      @spreadsheet ||= Spreadsheet.new(self, connection.get_spreadsheet_values(id, range))
     end
 
     def connection
