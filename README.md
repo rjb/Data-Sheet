@@ -3,21 +3,17 @@
 Read and write to Google Sheets.
 
 ```ruby
-require_relative 'google_sheet'
+require_relative 'lib/google_sheet'
 
-auth_details = {
-  scope: Google::Apis::SheetsV4::AUTH_SPREADSHEETS,
-  client_secrets_path: 'client_secret.json',
-  credentials_path: File.join(Dir.home, '.credentials', 'sheets.googleapis.com-ruby-google-sheet.yaml')
-}
+client_id_path = 'secret.json'
 
-service = GoogleSheet::Service.new(auth_details)
-sheet_id = 'SHEET-ID-HERE'
-cell_range = 'Sheet1!A1:D10'
+service = GoogleSheet::Service.new(client_id_path)
 
-sheet = service.spreadsheet(sheet_id)
+range = 'Sheet1!A1:D4'
+sheet_id = 'SHEET-ID'
 
-sheet.cells(cell_range).each do |row|
-  p row
+sheet = service.sheet_values(sheet_id, range)
+sheet.values.each do |value|
+  p value
 end
 ```
