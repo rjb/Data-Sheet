@@ -1,12 +1,14 @@
 module GoogleSheet
   class Spreadsheet
-    def initialize(connection, id, range)
-      @data = connection.get_spreadsheet_values(id, range)
+    attr_reader :values
+
+    def initialize(connection, id)
+      @id = id
+      @connection = connection
     end
 
-    # E.g. [["MV Minnow", "Bulk Carrier"], ["MV Fullerton", "Tugboat"]]
-    def values
-      @data.values
+    def values(range = 'A:Z')
+      @values ||= @connection.get_spreadsheet_values(@id, range).values
     end
   end
 end
