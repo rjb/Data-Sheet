@@ -13,8 +13,8 @@ module GoogleSheet
       @connection.service
     end
 
-    def sheet_values(id, range)
-      @sheet ||= Spreadsheet.new(connection, id, range)
+    def sheet(id)
+      @sheet ||= Spreadsheet.new(connection, id)
     end
   end
 end
