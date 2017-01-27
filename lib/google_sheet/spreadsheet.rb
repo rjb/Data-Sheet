@@ -1,3 +1,5 @@
+require_relative 'sheet'
+
 module GoogleSheet
   class Spreadsheet
     attr_reader :id
@@ -6,6 +8,14 @@ module GoogleSheet
     def initialize(connection, id)
       @id = id
       @connection = connection
+    end
+
+    def sheets
+      results = []
+      google_spreadsheet.sheets.each do |google_sheet|
+        results << Sheet.new(google_sheet)
+      end
+      results
     end
 
     def values(options = {})
