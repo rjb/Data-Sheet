@@ -13,8 +13,8 @@ module GoogleSheet
       @connection.service
     end
 
-    def sheet(id)
-      @sheet ||= Spreadsheet.new(connection, id)
+    def spreadsheet(id)
+      @spreadsheet ||= Spreadsheet.new(connection, id)
     end
   end
 end
