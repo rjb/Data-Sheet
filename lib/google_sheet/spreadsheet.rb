@@ -1,5 +1,6 @@
 module GoogleSheet
   class Spreadsheet
+    attr_reader :id
     attr_reader :values
     attr_reader :google_spreadsheet
 
