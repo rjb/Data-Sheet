@@ -14,7 +14,7 @@ module GoogleSheet
     end
 
     def spreadsheet(id)
-      @spreadsheet ||= Spreadsheet.new(connection, id)
+      Spreadsheet.new(connection, id)
     end
   end
 end
