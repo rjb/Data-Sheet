@@ -2,12 +2,10 @@ module GoogleSheet
   class Spreadsheet
     attr_reader :id
     attr_reader :values
-    attr_reader :google_spreadsheet
 
     def initialize(connection, id)
       @id = id
       @connection = connection
-      @google_spreadsheet = @connection.get_spreadsheet(@id)
     end
 
     def values(options = {})
@@ -22,6 +20,10 @@ module GoogleSheet
       }
 
       @connection.get_spreadsheet_values(@id, range, params).values
+    end
+
+    def google_spreadsheet
+      @connection.get_spreadsheet(@id)
     end
   end
 end
