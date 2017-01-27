@@ -20,7 +20,7 @@ module GoogleSheet
         date_time_render_option: options[:date_time_render_option] || nil,
       }
 
-      @values ||= @connection.get_spreadsheet_values(@id, range, params).values
+      @connection.get_spreadsheet_values(@id, range, params).values
     end
   end
 end
