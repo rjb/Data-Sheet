@@ -1,5 +1,9 @@
+require_relative 'update_request'
+
 module GoogleSheet
   class Sheet
+    UPDATABLE_PROPERTIES = %w(title index).freeze
+
     attr_writer :title
     attr_writer :index
 
@@ -22,31 +26,7 @@ module GoogleSheet
     end
 
     def save
-      @connection.batch_update_spreadsheet(@spreadsheet.id, { requests: batch_update_requests }, {} )
-    end
-
-    private
-
-    def batch_update_requests
-      [update_title_request, update_index_request]
-    end
-
-    def update_title_request
-      {
-        "update_sheet_properties": {
-          "properties": { "sheet_id": id, "title": title },
-          "fields": 'title'
-        }
-      }
-    end
-
-    def update_index_request
-      {
-        "update_sheet_properties": {
-          "properties": { "sheet_id": id, "index": index },
-          "fields": 'index'
-        }
-      }
+      UpdateRequest::Sheet.new(@connection, @spreadsheet, self).update!
     end
   end
 end
