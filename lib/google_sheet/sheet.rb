@@ -1,5 +1,8 @@
 module GoogleSheet
   class Sheet
+    attr_writer :title
+    attr_writer :index
+
     def initialize(connection, spreadsheet, api_results)
       @connection = connection
       @spreadsheet = spreadsheet
@@ -14,16 +17,8 @@ module GoogleSheet
       @title ||= @api_results.properties.title
     end
 
-    def title=(value)
-      @title = value
-    end
-
     def index
       @index ||= @api_results.properties.index
-    end
-
-    def index=(value)
-      @index = value
     end
 
     def save
