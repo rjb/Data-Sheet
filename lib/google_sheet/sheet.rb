@@ -1,5 +1,3 @@
-require_relative 'sheet_property'
-
 module GoogleSheet
   class Sheet
     def initialize(connection, spreadsheet, api_results)
