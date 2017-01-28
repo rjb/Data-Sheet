@@ -2,27 +2,53 @@ require_relative 'sheet_property'
 
 module GoogleSheet
   class Sheet
-    def initialize(google_sheet)
-      @google_sheet = google_sheet
+    def initialize(connection, spreadsheet, api_results)
+      @connection = connection
+      @spreadsheet = spreadsheet
+      @api_results = api_results
+    end
+
+    def id
+      @id ||= @api_results.properties.sheet_id
     end
 
     def title
-      properties.title
+      @title ||= @api_results.properties.title
+    end
+
+    def title=(value)
+      @title = value
     end
 
     def index
-      properties.index
+      @index ||= @api_results.properties.index
     end
 
-    def properties
-      @properties ||= SheetProperty.new(
-        index: gs_properties.index,
-        title: gs_properties.title
-      )
+    def index=(value)
+      @index = value
     end
 
-    def gs_properties
-      @google_sheet.properties
+    def save
+      @connection.batch_update_spreadsheet(@spreadsheet.id, { requests: to_batch_update_request }, {} )
+    end
+
+    private
+
+    def to_batch_update_request
+      [
+        {
+          "update_sheet_properties": {
+            "properties": { "sheet_id": id, "title": title },
+            "fields": 'title'
+          }
+        },
+        {
+          "update_sheet_properties": {
+            "properties": { "sheet_id": id, "index": index },
+            "fields": 'index'
+          }
+        }
+      ]
     end
   end
 end
