@@ -4,18 +4,11 @@ module GoogleSheet
   class Spreadsheet
     attr_reader :id
     attr_reader :values
+    attr_reader :sheets
 
     def initialize(connection, id)
       @id = id
       @connection = connection
-    end
-
-    def sheets
-      results = []
-      google_spreadsheet.sheets.each do |google_sheet|
-        results << Sheet.new(google_sheet)
-      end
-      results
     end
 
     def values(options = {})
@@ -32,8 +25,10 @@ module GoogleSheet
       @connection.get_spreadsheet_values(@id, range, params).values
     end
 
-    def google_spreadsheet
-      @connection.get_spreadsheet(@id)
+    def sheets
+      @sheets ||= @connection.get_spreadsheet(id).sheets.map do |api_sheet|
+        Sheet.new(@connection, self, api_sheet)
+      end
     end
   end
 end
