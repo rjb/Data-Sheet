@@ -30,5 +30,13 @@ module GoogleSheet
         Sheet.new(@connection, self, api_sheet)
       end
     end
+
+    def sheet_by_title(title)
+      sheets.select { |sheet| sheet.title == title }.first
+    end
+
+    def sheet_by_index(index)
+      sheets.select { |sheet| sheet.index == index }.first
+    end
   end
 end
