@@ -13,6 +13,10 @@ module GoogleSheet
       @api_results = api_results
     end
 
+    def values(opts = {})
+      @values ||= @connection.get_spreadsheet_values(@spreadsheet.id, "#{title}!A:Z", opts).values
+    end
+
     def id
       @id ||= @api_results.properties.sheet_id
     end
