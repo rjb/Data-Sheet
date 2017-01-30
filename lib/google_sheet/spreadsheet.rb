@@ -13,9 +13,10 @@ module GoogleSheet
 
     def sheets
       @sheets ||= @service.get(:sheets, self).map do |api_sheet|
+        id = api_sheet.properties.sheet_id
         index = api_sheet.properties.index
         title = api_sheet.properties.title
-        Sheet.new(@service, self, title, index)
+        Sheet.new(@service, self, id, title, index)
       end
     end
 
