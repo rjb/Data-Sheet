@@ -27,5 +27,28 @@ module GoogleSheet
         connection.get_spreadsheet_values(spreadsheet_id, title, opts).values
       end
     end
+
+    def update(obj)
+      if obj.is_a?(Sheet)
+        connection.batch_update_spreadsheet(obj.spreadsheet_id, { requests: batch_update_requests(obj) }, {} )
+      end
+    end
+
+    private
+
+    def batch_update_requests(sheet)
+      GoogleSheet::Sheet::UPDATABLE_PROPERTIES.map do |updateable_property|
+        property_request(sheet, updateable_property)
+      end
+    end
+
+    def property_request(sheet, field)
+      {
+        "update_sheet_properties": {
+          "properties": { "sheet_id": sheet.id, "#{field}": sheet.send(field) },
+          "fields": field
+        }
+      }
+    end
   end
 end
