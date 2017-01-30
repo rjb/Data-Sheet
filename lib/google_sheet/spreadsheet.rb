@@ -6,14 +6,16 @@ module GoogleSheet
     attr_reader :values
     attr_reader :sheets
 
-    def initialize(connection, id)
+    def initialize(service, id)
       @id = id
-      @connection = connection
+      @service = service
     end
 
     def sheets
-      @sheets ||= @connection.get_spreadsheet(id).sheets.map do |api_sheet|
-        Sheet.new(@connection, self, api_sheet)
+      @sheets ||= @service.get(:sheets, self).map do |api_sheet|
+        index = api_sheet.properties.index
+        title = api_sheet.properties.title
+        Sheet.new(@service, self, title, index)
       end
     end
 
