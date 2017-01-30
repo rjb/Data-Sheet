@@ -1,14 +1,14 @@
 module GoogleSheet
   class UpdateRequest
     class Sheet
-      def initialize(connection, spreadsheet, sheet)
-        @connection = connection
+      def initialize(service, spreadsheet, sheet)
+        @service = service
         @spreadsheet = spreadsheet
         @sheet = sheet
       end
 
       def update!
-        @connection.batch_update_spreadsheet(@spreadsheet.id, { requests: batch_update_requests }, {} )
+        @service.connection.batch_update_spreadsheet(@spreadsheet.id, { requests: batch_update_requests }, {} )
       end
 
       private
