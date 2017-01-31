@@ -1,5 +1,3 @@
-require_relative 'update_request'
-
 module GoogleSheet
   class Sheet
     UPDATABLE_PROPERTIES = %w(title index).freeze
