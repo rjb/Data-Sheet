@@ -23,7 +23,7 @@ module GoogleSheet
         connection.get_spreadsheet(obj.id).sheets
       when :sheet_values
         title = obj.title + '!A:Z'
-        spreadsheet_id = obj.spreadsheet_id
+        spreadsheet_id = obj.spreadsheet.id
         connection.get_spreadsheet_values(spreadsheet_id, title, opts).values
       end
     end
