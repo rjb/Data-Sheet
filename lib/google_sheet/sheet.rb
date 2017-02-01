@@ -19,6 +19,15 @@ module GoogleSheet
       @values ||= load_values(opts)
     end
 
+    def append(values, range: nil, value_input_option: nil, insert_data_option: nil)
+      range ||= title + '!A:Z'
+      opts = {
+        value_input_option: value_input_option ||= 'USER_ENTERED',
+        insert_data_option: insert_data_option ||= 'INSERT_ROWS'
+      }
+      @service.append_sheet(spreadsheet.id, values, range, opts)
+    end
+
     def save
       @service.update(self)
     end
