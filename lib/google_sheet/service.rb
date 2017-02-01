@@ -34,6 +34,11 @@ module GoogleSheet
       end
     end
 
+    def append_sheet(spreadsheet_id, values, range, opts = {})
+      value_range = Google::Apis::SheetsV4::ValueRange.new(values: values)
+      connection.append_spreadsheet_value(spreadsheet_id, range, value_range, opts)
+    end
+
     private
 
     def batch_update_requests(sheet)
