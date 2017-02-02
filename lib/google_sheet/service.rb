@@ -42,7 +42,7 @@ module GoogleSheet
       end
     end
 
-    def append_sheet(spreadsheet_id, values, range, opts = {})
+    def append(spreadsheet_id, values, range, opts = {})
       value_range = Google::Apis::SheetsV4::ValueRange.new(values: values)
       response = connection.append_spreadsheet_value(spreadsheet_id, range, value_range, opts)
       AppendSheetResponse.new(response.updates)
