@@ -36,10 +36,8 @@ module GoogleSheet
       end
     end
 
-    def update(obj)
-      if obj.is_a?(Sheet)
-        connection.batch_update_spreadsheet(obj.spreadsheet_id, { requests: batch_update_requests(obj) }, {} )
-      end
+    def update(sheet)
+      connection.batch_update_spreadsheet(sheet.spreadsheet.id, { requests: batch_update_requests(sheet) }, {} )
     end
 
     def append(spreadsheet_id, values, range, opts = {})
