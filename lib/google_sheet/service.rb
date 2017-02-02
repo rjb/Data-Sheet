@@ -4,6 +4,14 @@ require_relative 'spreadsheet'
 
 module GoogleSheet
   class Service
+    class AppendSheetResponse
+      attr_reader :updates
+
+      def initialize(updates)
+        @updates = updates
+      end
+    end
+
     def initialize(client_id_path)
       file_token_store = TokenStore.new(client_id_path)
       @connection = Connection.new(file_token_store.credentials)
@@ -36,7 +44,8 @@ module GoogleSheet
 
     def append_sheet(spreadsheet_id, values, range, opts = {})
       value_range = Google::Apis::SheetsV4::ValueRange.new(values: values)
-      connection.append_spreadsheet_value(spreadsheet_id, range, value_range, opts)
+      response = connection.append_spreadsheet_value(spreadsheet_id, range, value_range, opts)
+      AppendSheetResponse.new(response.updates)
     end
 
     private
