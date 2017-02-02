@@ -4,6 +4,14 @@ require_relative 'spreadsheet'
 
 module GoogleSheet
   class Service
+    class UpdateSheetResponse
+      attr_reader :response
+
+      def initialize(response)
+        @response = response
+      end
+    end
+
     class AppendSheetResponse
       attr_reader :updates
 
@@ -37,7 +45,10 @@ module GoogleSheet
     end
 
     def update(sheet)
-      connection.batch_update_spreadsheet(sheet.spreadsheet.id, { requests: batch_update_requests(sheet) }, {} )
+      spreadsheet_id = sheet.spreadsheet.id
+      requests = { requests: batch_update_requests(sheet) }
+      response = connection.batch_update_spreadsheet(spreadsheet_id, requests, {})
+      UpdateSheetResponse.new(response)
     end
 
     def append(spreadsheet_id, values, range, opts = {})
