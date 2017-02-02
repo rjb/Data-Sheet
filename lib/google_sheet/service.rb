@@ -45,9 +45,7 @@ module GoogleSheet
     end
 
     def update(sheet)
-      spreadsheet_id = sheet.spreadsheet.id
-      requests = { requests: batch_update_requests(sheet) }
-      response = connection.batch_update_spreadsheet(spreadsheet_id, requests, {})
+      response = connection.batch_update_spreadsheet(sheet.spreadsheet.id, update_requests(sheet), {})
       UpdateSheetResponse.new(response)
     end
 
@@ -59,7 +57,11 @@ module GoogleSheet
 
     private
 
-    def batch_update_requests(sheet)
+    def update_requests(sheet)
+      { requests: property_requests(sheet) }
+    end
+
+    def property_requests(sheet)
       GoogleSheet::Sheet::UPDATABLE_PROPERTIES.map do |updateable_property|
         property_request(sheet, updateable_property)
       end
