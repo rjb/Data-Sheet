@@ -13,10 +13,10 @@ module GoogleSheet
     end
 
     class AppendSheetResponse
-      attr_reader :updates
+      attr_reader :response
 
-      def initialize(updates)
-        @updates = updates
+      def initialize(response)
+        @response = response
       end
     end
 
@@ -54,7 +54,7 @@ module GoogleSheet
     def append(spreadsheet_id, values, range, opts = {})
       value_range = Google::Apis::SheetsV4::ValueRange.new(values: values)
       response = connection.append_spreadsheet_value(spreadsheet_id, range, value_range, opts)
-      AppendSheetResponse.new(response.updates)
+      AppendSheetResponse.new(response)
     end
 
     private
