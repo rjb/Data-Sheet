@@ -25,7 +25,7 @@ module GoogleSheet
         value_input_option: value_input_option ||= 'USER_ENTERED',
         insert_data_option: insert_data_option ||= 'INSERT_ROWS'
       }
-      @service.append_sheet(spreadsheet.id, values, range, opts)
+      @service.append(spreadsheet.id, values, range, opts)
     end
 
     def save
