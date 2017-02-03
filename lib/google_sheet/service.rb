@@ -33,15 +33,14 @@ module GoogleSheet
       Spreadsheet.new(self, id)
     end
 
-    def get(type, obj, opts = {})
-      case type
-      when :sheets
-        connection.get_spreadsheet(obj.id).sheets
-      when :sheet_values
-        title = obj.title + '!A:Z'
-        spreadsheet_id = obj.spreadsheet.id
-        connection.get_spreadsheet_values(spreadsheet_id, title, opts).values
-      end
+    def sheets(spreadsheet, opts = {})
+      connection.get_spreadsheet(spreadsheet.id, opts).sheets
+    end
+
+    def sheet_values(sheet, opts = {})
+      range = sheet.title + '!A:Z'
+      spreadsheet_id = sheet.spreadsheet.id
+      connection.get_spreadsheet_values(spreadsheet_id, range, opts).values
     end
 
     def update(sheet)
