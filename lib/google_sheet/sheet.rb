@@ -35,7 +35,7 @@ module GoogleSheet
     private
 
     def load_values(opts = {})
-      @service.get(:sheet_values, self, opts)
+      @service.sheet_values(self, opts)
     end
   end
 end
